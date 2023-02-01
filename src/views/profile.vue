@@ -11,7 +11,7 @@
       </v-row>
       <v-row class="text-left">
         <v-col cols="1">
-            <v-img :src="img" style="max-width: 100%"></v-img>
+            <v-img :src="info.photo" style="max-width: 100%"></v-img>
         </v-col>
         <v-col cols="5" class="text-left">
           <p>
@@ -21,10 +21,10 @@
             E-mail: <a href="mailto:...">{{info.email}}</a>
           </p>
           <p>
-            Город: {{info.address.city}}
+            Город: {{info.city}}
           </p>
           <p>
-            Место работы: {{info.company.name}}
+            Место работы: {{info.company}}
           </p>
         </v-col>
       </v-row>
@@ -36,20 +36,20 @@
 export default {
   name: 'ProfilePage',
 
+  props: ["myId"],
+
   data: () => ({
         currentId: null,
-        info: [],
-        img: ""
+        info: []
     }),
 
     methods: {
         getInfo() {
             this.axios({
                 method: 'GET',
-                url: "http://jsonplaceholder.typicode.com/users/" + this.currentId
+                url: "https://api.npoint.io/63c17ed3003011515fc0"
             }).then((response) => {
-                this.info = response.data;
-                this.img = "https://randomuser.me/api/portraits/men/" + this.$route.params.id + ".jpg";
+                this.info = response.data[this.currentId-1];
             })
         }
     },
